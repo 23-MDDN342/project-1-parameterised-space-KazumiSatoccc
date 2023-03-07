@@ -22,5 +22,5 @@ function polygon(x, y, radius, npoints) { //function for drawing polygons
 	  let sy = y + sin(a) * radius;
 	  vertex(sx, sy);
 	}
-	endShape(CLOSE);   //polygon(0, 0, 70, 7); code for drawing
+	endShape(CLOSE);   //polygon(0, 0, 70, 7); codee for drawing
   }
