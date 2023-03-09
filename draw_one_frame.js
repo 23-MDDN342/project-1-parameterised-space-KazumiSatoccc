@@ -3,15 +3,31 @@ var y=300;
 var a=100;
 var b=100;
 
+var polySize=10
+let deg24 = 24
+let deg60 = 60
+
+
 function draw_one_frame() {
+	//let polyRotate = map(frameCount, 0, radians(deg24), 0, radians(deg60));
   background(255);
-  push();  //illusion hexagon
+  //hexagons
   translate(200, 200);
-  for (let i = 0; i < 7; i++){
-	stroke(5);
-    polygon(0, 0, 70 - 10 * i, 6);
+  
+  for (let i = 0; i < 10; i++){
+	push();
+	//angleMode(DEGREES);
+	strokeWeight(4);
+	//stroke(frameCount + 10*i);
+	rotate(frameCount * i);
+	strokeJoin(ROUND);
+	noFill();
+    polygon(0, 0, polySize + 10 * i, 6)
+	
+	pop();
+
   }
-  pop();
+  
 }
 
 function polygon(x, y, radius, npoints) { //function for drawing polygons
