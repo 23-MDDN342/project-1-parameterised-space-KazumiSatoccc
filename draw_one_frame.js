@@ -49,6 +49,13 @@ function draw_one_frame() {
 	stroke(centerRing);
 	ellipse(0,0,15/2+sizee, 15/2+sizee); //draw center ellipse
 
+	for(i=0;i<12;i++){ //draw flower of life
+		rotate(30);
+		stroke(50,50,20*i)
+		fill(50,50,20*i,satulation);
+		ellipse(0,-50,i/2+sizee, i/2+sizee);
+	}
+
 	for(i=0;i<6;i++){ //draw seed of life
   		rotate(60);
 
@@ -59,12 +66,6 @@ function draw_one_frame() {
 		
 	}
 
-	for(i=0;i<12;i++){ //draw flower of life
-		rotate(30);
-		stroke(50,50,20*i)
-		fill(50,50,20*i,satulation);
-		ellipse(0,-50,i/2+sizee, i/2+sizee);
-	  }
 	sizee+=adder;
 
 	if (sizee >= 45) {
