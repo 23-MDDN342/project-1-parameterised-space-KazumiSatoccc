@@ -9,15 +9,10 @@
 
 var sizee;
 var adder;
+var satulation=100;
 
 sizee = 15;
 adder = 4;
-
-// function setup() {
-// 	sizee = 15;
-//   	adder = 0.5;
-// }
-
 
 function draw_one_frame() {
 // 	//let polyRotate = map(frameCount, 0, radians(deg24), 0, radians(deg60));
@@ -39,23 +34,40 @@ function draw_one_frame() {
 
 //   }
 	angleMode(DEGREES);
-	background(220);
+	background(0);
 	translate(200, 200);
-	noFill();
+	//noFill();
 
 	//rotate(frameCount * 1)
 
-	ellipseSize = frameCount * 5;
+	//ellipseSize = frameCount * 5;
 
-	for(i=0;i<6;i++){
-  		strokeWeight(1);
+	let centerRing = 100
+
+	fill(centerRing,centerRing,centerRing,200);
+	strokeWeight(1);
+	stroke(centerRing);
+	ellipse(0,0,15/2+sizee, 15/2+sizee); //draw center ellipse
+
+	for(i=0;i<6;i++){ //draw seed of life
   		rotate(60);
+
+		
+		stroke(40*i,50,50);
+		fill(40*i,50,50,satulation);
   		ellipse(0,-25,i/2+sizee, i/2+sizee);
-  		ellipse(0,0,i/2+sizee, i/2+sizee);
+		
 	}
+
+	for(i=0;i<12;i++){ //draw flower of life
+		rotate(30);
+		stroke(50,50,20*i)
+		fill(50,50,20*i,satulation);
+		ellipse(0,-50,i/2+sizee, i/2+sizee);
+	  }
 	sizee+=adder;
 
-	if (sizee >= 50) {
+	if (sizee >= 45) {
   		adder*=-1;
 	} 
 
