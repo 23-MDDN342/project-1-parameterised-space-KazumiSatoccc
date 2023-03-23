@@ -1,50 +1,74 @@
-var x=300;
-var y=300;
-var a=100;
-var b=100;
+var seedBegin; 
+var adder; 
+var seedSize; 
+
+seedBegin = 115; //determines size of the seed of life
+adder = 4; //determines speed of ellipse size change
+seedSize = 150; //determines size of each seed ellipse 
 
 function draw_one_frame() {
-  //background(255);
-  x+=2;
-  y+=2;
-	a-=2;
-	b-=2;
-	strokeWeight(1);
-  translate(width/2, height/2);
-  for(var i=0;i<15;i++){
-	  for(var k=0;k<20;k++){
-		stroke(255,255,255);
-    rotate(PI / 12.0);
-	  fill(255,255-i*10,255-k*10);
-  	line(a%100,b%100,x%300,y%300);
-	  ellipse((x+i*20)%width,(y+k*20)%height,i+4,i+4);
-		drawtriangle((a-i*20)%width,(b-k*20)%height,k/8);
-		rect(x%width, y%height, k+10, k+10);
-		fill(0,i*10,255-k*10);
-		ellipse((x-i*20)%width,(y-k*20)%height,i+3,i+3);
-		rotate(PI / 24.0);
-		fill(255-(i+k)*5,(i+k)*7,i*20);
-		drawtriangle((a+i*20)%width,(b+k*20)%height,k/8);
-		rect(a%width, b%height, k+5, k+5);
-		drawflower(k,x);
-	  }
-  }
+	colorMode(HSB,360,100,100,1); // change color mode to HSB
+	angleMode(DEGREES);
+	background(280,100,20);
+	translate(width/2,height/2-50); //center of everything
 
+	scale(3);
+
+	push();
+  	for(i=0;i<6;i++){ //draw flower of life
+  		rotate(60);
+		stroke(360);
+		noFill();
+		push();
+		strokeradialGradient( //banishing code
+			0, seedSize/2, 50, 
+			0, seedSize/2, 100,
+			0, seedSize/2, 190,
+			color(280,100,20,0),
+			color(50,40,100,100),
+			color(280,100,20,0)
+			);
+		strokeWeight(3);
+		ellipse(0,seedSize/2,i/2+seedBegin,i/2+seedBegin); //ellipse for flower of life
+		pop();
+  	}
+
+  	seedBegin+=adder;
+
+  	if (seedBegin >= seedSize) { //code for changing the size of flower of life
+		adder*=-1;
+  	} 
+
+  	if (seedBegin <= seedSize-50) {
+  		adder*=-1;
+  	}
+	pop();
+
+	push();
+	radialGradient(
+		0, 0, 50, //where startcolor start
+		0, 0, 100, //where endcolor start
+		color(50,100,100,100), //startcolor
+		color(50,20,100,0) //endcolor
+	  );
+	noStroke();
+	ellipse(0,0,250,250); //draw gradient ellipse
+	pop();
 }
 
-function drawtriangle(x,y,r){
-	triangle(x, y, x+7*r, y-13.75*r, x+14*r, y);
+function radialGradient(sX,sY,sR,eX,eY,eR,colorS,colorE){ //fill gradient codes
+	let gradient = drawingContext.createRadialGradient(sX,sY,sR,eX,eY,eR);
+	gradient.addColorStop(0, colorS);
+	gradient.addColorStop(1, colorE);
+	
+	drawingContext.fillStyle = gradient; 
 }
 
-function drawflower(i,k){
-		if(i%2==1){
-			fill(255,(k*0.4)%255,30);
-			stroke(k%255,255,0);
-			arc(0,0,150+i+150*sin(k*PI/24),150,0,PI / 40);
-		}
-		else{
-			fill(k%255,0,255);
-			stroke(0,(k*0.4)%255,255);
-			arc(0,0,(100+100*cos(k*PI/24))%255,50,0,PI / 20);
-		}
+function strokeradialGradient(sX,sY,sR,mX,mY,mR,eX,eY,eR,colorS,colorM,colorE){ //stroke gradient codes
+	let strokegradient = drawingContext.createRadialGradient(sX,sY,sR,mX,mY,mR,eX,eY,eR);
+	strokegradient.addColorStop(0, colorS);
+    strokegradient.addColorStop(0.5, colorM);
+	strokegradient.addColorStop(1, colorE);
+	
+	drawingContext.strokeStyle = strokegradient; 
 }
